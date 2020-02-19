@@ -1,4 +1,5 @@
 public class ArrayStorage {
+
     Resume[] storage = new Resume[10000];
     private int size = 0;
 
