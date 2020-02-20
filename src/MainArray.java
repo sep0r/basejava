@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 
 public class MainArray {
     private final static ArrayStorage arrayStorage = new ArrayStorage();
-
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
