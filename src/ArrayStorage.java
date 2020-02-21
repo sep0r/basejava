@@ -62,6 +62,12 @@ public class ArrayStorage {
         return new Resume[i];
     }
 
+//    void getAllWithNull() {
+//        for (Resume s : storage) {
+//            System.out.println(s);
+//        }
+//    }
+
     void clear() {
         for (int to = size, i = 0; i < to; i++)
             storage[i] = null;

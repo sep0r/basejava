@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 
 public class MainArray {
     private final static ArrayStorage arrayStorage = new ArrayStorage();
+
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
@@ -14,7 +15,7 @@ public class MainArray {
                 System.out.println("Неверная команда.");
                 continue;
             }
-            String uuid=null;
+            String uuid = null;
             if (params.length == 2) {
                 uuid = params[1].intern();
             }
