@@ -4,26 +4,30 @@ public class ArrayStorage {
     private int size = 0;
 
     void save(Resume resume) {
-        for (int i = 0; i <= size; i++) {
-            if (storage[i] == null) {
-                storage[i] = resume;
-                size = i + 1;
-                return;
+        if (size >= 10000) {
+            System.out.println("Storage is full");
+        } else if (size != 0) {
+            for (int i = 0; i < size; i++) {
+                if (storage[i].getUuid().equals(resume.getUuid())) {
+                    System.out.println("Resume with " + storage[i].getUuid() + "is already exist!");
+                    break;
+                } else {
+                    storage[size] = resume;
+                    size++;
+                    break;
+                }
             }
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                System.out.println("Resume with " + storage[i].getUuid() + "is already exist!");
-                return;
-            }
+        } else {
+            storage[size] = resume;
+            size++;
         }
-        System.out.println("Storage full");
     }
 
     Resume get(String uuid) {
+        int i;
         if (uuid != null) {
-            int i;
             for (i = 0; i < size; i++) {
-                Resume a = storage[i];
-                if (a.getUuid().equals(uuid)) {
+                if (storage[i].getUuid().equals(uuid)) {
                     break;
                 }
             }
@@ -34,20 +38,18 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        try {
-            for (int i = 0; i < 10000; i++) {
-                Resume a = storage[i];
-                if (a.getUuid().equals(uuid)) {
-                    for (; i < size; i++) {
-                        storage[i] = storage[i + 1];
-                    }
-                    size--;
-                    break;
+        int i = 0;
+        do {
+            if (storage[i].getUuid().equals(uuid)) {
+                for (; i < size; i++) {
+                    storage[i] = storage[i + 1];
                 }
+                size--;
+                return;
             }
-        } catch (NullPointerException e) {
-            System.out.println("Resume with this uuid not found.");
-        }
+            i++;
+        } while (i < size);
+        System.out.println("Resume with this uuid not found.");
     }
 
     int size() {
@@ -62,15 +64,10 @@ public class ArrayStorage {
         return new Resume[i];
     }
 
-//    void getAllWithNull() {
-//        for (Resume s : storage) {
-//            System.out.println(s);
-//        }
-//    }
-
     void clear() {
-        for (int to = size, i = 0; i < to; i++)
+        for (int i = 0; i < size; i++) {
             storage[i] = null;
+        }
         size = 0;
     }
 }
