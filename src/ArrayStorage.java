@@ -1,10 +1,12 @@
+import java.util.Arrays;
+
 public class ArrayStorage {
 
     Resume[] storage = new Resume[10000];
     private int size = 0;
 
     void save(Resume resume) {
-        if (size >= 10000) {
+        if (size >= storage.length) {
             System.out.println("Storage is full");
         } else if (size != 0) {
             for (int i = 0; i < size; i++) {
@@ -23,18 +25,23 @@ public class ArrayStorage {
         }
     }
 
-    Resume get(String uuid) {
-        int i;
-        if (uuid != null) {
-            for (i = 0; i < size; i++) {
+    private int check_resume(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i] != null) {
                 if (storage[i].getUuid().equals(uuid)) {
-                    break;
+                    return i;
                 }
             }
-            return storage[i];
-        } else {
-            return null;
         }
+        return -1;
+    }
+
+    Resume get(String uuid) {
+        int i = check_resume(uuid);
+        if (i != -1) {
+            return storage[i];
+        }
+        return null;
     }
 
     void delete(String uuid) {
@@ -57,11 +64,7 @@ public class ArrayStorage {
     }
 
     Resume[] getAll() {
-        int i;
-        for (i = 0; i < size; i++) {
-            System.out.println(storage[i]);
-        }
-        return new Resume[i];
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     void clear() {

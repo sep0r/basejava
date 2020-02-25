@@ -50,13 +50,14 @@ public class MainArray {
         }
     }
 
-    static void printAll() {
-        int all = arrayStorage.size();
+    private static void printAll() {
         System.out.println("----------------------------");
-        if (all == 0) {
+        if (arrayStorage.size() == 0) {
             System.out.println("Empty");
         } else {
-            arrayStorage.getAll();
+            for (Resume r : arrayStorage.getAll()) {
+                System.out.println(r);
+            }
         }
         System.out.println("----------------------------");
     }
