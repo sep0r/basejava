@@ -1,11 +1,15 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 public class ArrayStorage {
 
-    Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    void save(Resume resume) {
+    public void save(Resume resume) {
         if (size >= storage.length) {
             System.out.println("Storage is full");
         } else if (size != 0) {
@@ -25,7 +29,15 @@ public class ArrayStorage {
         }
     }
 
-    private int check_resume(String uuid) {
+    public Resume get(String uuid) {
+        int i = checkResume(uuid);
+        if (i != -1) {
+            return storage[i];
+        }
+        return null;
+    }
+
+    private int checkResume(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i] != null) {
                 if (storage[i].getUuid().equals(uuid)) {
@@ -36,19 +48,11 @@ public class ArrayStorage {
         return -1;
     }
 
-    Resume get(String uuid) {
-        int i = check_resume(uuid);
-        if (i != -1) {
-            return storage[i];
-        }
-        return null;
-    }
-
-    void delete(String uuid) {
+    public void delete(String uuid) {
         int i = 0;
         do {
             if (storage[i].getUuid().equals(uuid)) {
-                for (; i < size; i++) {
+                for (; i < size-1; i++) {
                     storage[i] = storage[i + 1];
                 }
                 size--;
@@ -59,15 +63,15 @@ public class ArrayStorage {
         System.out.println("Resume with this uuid not found.");
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
