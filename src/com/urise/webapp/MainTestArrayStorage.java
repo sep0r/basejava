@@ -8,18 +8,24 @@ public class MainTestArrayStorage {
 
     public static void main(String[] args) {
 
-        arrayStorage1.save(new Resume("3be6912a-5275-11ea-8d77-2e728ce88121"));
-        arrayStorage1.save(new Resume("3be693d2-5275-11ea-8d77-2e728ce88122"));
-        arrayStorage1.save(new Resume("3be69526-5275-11ea-8d77-2e728ce88123"));
-        arrayStorage1.save(new Resume("3be6965c-5275-11ea-8d77-2e728ce88124"));
-        arrayStorage1.save(new Resume("3be69792-5275-11ea-8d77-2e728ce88125"));
+        Resume r1 = new Resume("uuid1");
+        Resume r2 = new Resume("uuid2");
+        Resume r3 = new Resume("uuid3");
+        Resume r4 = new Resume("uuid4");
+        Resume r5 = new Resume("uuid5");
 
-        System.out.println("Get: " + arrayStorage1.get("3be693d2-5275-11ea-8d77-2e728ce88122"));
-        System.out.println("Size: " + arrayStorage1.size());
+        arrayStorage1.save(r1);
+        arrayStorage1.save(r2);
+        arrayStorage1.save(r3);
+        arrayStorage1.save(r4);
+        arrayStorage1.save(r5);
+
         printAll();
+        System.out.println("Get: " + arrayStorage1.get("uuid2"));
+        System.out.println("Size: " + arrayStorage1.size());
 
-        arrayStorage1.delete("3be6965c-5275-11ea-8d77-2e728ce88124");
-        System.out.println("Get deleted resume: " + arrayStorage1.get("3be6965c-5275-11ea-8d77-2e728ce88124"));
+        arrayStorage1.delete("uuid4");
+        System.out.println("Get deleted resume: " + arrayStorage1.get("uuid4"));
         System.out.println("Size: " + arrayStorage1.size());
         printAll();
 

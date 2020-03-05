@@ -17,7 +17,7 @@ public class Resume {
 
     @Override
     public String toString() {
-        return "com.urise.webapp.model.Resume{" +
+        return "Resume{" +
                 "uuid='" + uuid + '\'' +
                 '}';
     }
