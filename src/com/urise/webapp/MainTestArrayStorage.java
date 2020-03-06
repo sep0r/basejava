@@ -20,6 +20,8 @@ public class MainTestArrayStorage {
         arrayStorage1.save(r4);
         arrayStorage1.save(r5);
 
+        arrayStorage1.update(r2);
+
         printAll();
         System.out.println("Get: " + arrayStorage1.get("uuid2"));
         System.out.println("Size: " + arrayStorage1.size());
