@@ -42,9 +42,7 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int index = checkResume(uuid);
         if (index != -1) {
-            for (; index < size - 1; index++) {
-                storage[index] = storage[index + 1];
-            }
+            System.arraycopy(storage, index + 1, storage, index, size - index);
             size--;
         } else {
             System.out.println("Failed to delete: resume with this uuid not found.");
@@ -53,10 +51,8 @@ public class ArrayStorage {
 
     private int checkResume(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i] != null) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    return i;
-                }
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
             }
         }
         return -1;
