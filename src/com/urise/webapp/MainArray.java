@@ -1,20 +1,21 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import com.urise.webapp.storage.SortedArrayStorage;
+import com.urise.webapp.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainArray {
-    private final static ArrayStorage arrayStorage = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | save uuid | update uuid | delete uuid | get uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -29,21 +30,25 @@ public class MainArray {
                     printAll();
                     break;
                 case "size":
-                    System.out.println(arrayStorage.size());
+                    System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    arrayStorage.save(new Resume(uuid));
+                    ARRAY_STORAGE.save(new Resume(uuid));
+                    printAll();
+                    break;
+                case "update":
+                    ARRAY_STORAGE.update(new Resume(uuid));
                     printAll();
                     break;
                 case "delete":
-                    arrayStorage.delete(uuid);
+                    ARRAY_STORAGE.delete(uuid);
                     printAll();
                     break;
                 case "get":
-                    System.out.println(arrayStorage.get(uuid));
+                    System.out.println(ARRAY_STORAGE.get(uuid));
                     break;
                 case "clear":
-                    arrayStorage.clear();
+                    ARRAY_STORAGE.clear();
                     printAll();
                     break;
                 case "exit":
@@ -57,10 +62,10 @@ public class MainArray {
 
     private static void printAll() {
         System.out.println("----------------------------");
-        if (arrayStorage.size() == 0) {
+        if (ARRAY_STORAGE.size() == 0) {
             System.out.println("Empty");
         } else {
-            for (Resume r : arrayStorage.getAll()) {
+            for (Resume r : ARRAY_STORAGE.getAll()) {
                 System.out.println(r);
             }
         }
