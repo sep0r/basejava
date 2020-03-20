@@ -1,7 +1,13 @@
 package com.urise.webapp.model;
 
+import java.util.UUID;
+
 public class Resume implements Comparable<Resume> {
     private String uuid;
+
+    public Resume() {
+        this(UUID.randomUUID().toString());
+    }
 
     public Resume(String uuid) {
         this.uuid = uuid;
@@ -17,9 +23,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                '}';
+        return uuid;
     }
 
     @Override

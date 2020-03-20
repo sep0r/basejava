@@ -1,26 +1,29 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
 
-    protected static final int STORAGE_LIMIT = 10_000;
+    protected static final int STORAGE_LIMIT = 3;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     public void save(Resume resume) {
         if (size >= storage.length) {
-            System.out.println("Storage is full");
+            throw new StorageException("Storage is full", resume.getUuid());
         } else {
             int index = getIndex(resume.getUuid());
             if (index < 0) {
                 addResume(resume, index);
                 size++;
             } else {
-                System.out.println("Resume with " + storage[index].getUuid() + " is already exist!");
+                throw new ExistStorageException(resume.getUuid());
             }
         }
     }
@@ -28,7 +31,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
-            System.out.println("Resume with this uuid not exist!");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
         }
@@ -37,7 +40,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Failed to delete: resume with this uuid not found.");
+            throw new NotExistStorageException(uuid);
         } else {
             deleteResume(index);
             storage[size - 1] = null;
@@ -63,8 +66,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.println("Resume with this uuid not found. ");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     protected abstract int getIndex(String uuid);
