@@ -10,7 +10,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void deleteResume(int index) {
+    protected void deleteResume(Integer index) {
         storage[index] = storage[size - 1];
     }
 
@@ -20,6 +20,6 @@ public class ArrayStorage extends AbstractArrayStorage {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 }

@@ -17,22 +17,25 @@ public class ListStorage extends AbstractStorage {
         return null;
     }
 
+    @Override
+    protected boolean checkIndex(Object index) {
+        return index != null;
+    }
+
     public void preSave(Integer uuid, Resume resume) {
         list.add(resume);
     }
 
     public void preUpdate(String uuid, Resume resume) {
-        int index = (int) ExistStorageException(uuid);
+        Integer index = (Integer) ExistStorageException(uuid);
         list.set(index, resume);
     }
 
-    public Resume get(String uuid) {
-        int index = (int) ExistStorageException(uuid);
+    public Resume preGet(Integer index) {
         return list.get(index);
     }
 
-    public void delete(String uuid) {
-        int index = (int) ExistStorageException(uuid);
+    public void preDelete(int index) {
         list.remove(index);
     }
 

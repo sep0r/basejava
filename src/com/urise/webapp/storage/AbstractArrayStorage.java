@@ -26,8 +26,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[index] = resume;
     }
 
-    public void delete(String uuid) {
-        Integer index = (Integer) ExistStorageException(uuid);
+    public void preDelete(int index) {
         deleteResume(index);
         storage[size - 1] = null;
         size--;
@@ -46,14 +45,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public Resume get(String uuid) {
-        Integer index = (Integer) ExistStorageException(uuid);
+    public Resume preGet(Integer index) {
         return storage[index];
+    }
+
+    @Override
+    protected boolean checkIndex(Object index) {
+        return (Integer) index >= 0;
     }
 
     protected abstract Integer getKey(String uuid);
 
     protected abstract void addResume(Resume resume, Integer index);
 
-    protected abstract void deleteResume(int index);
+    protected abstract void deleteResume(Integer index);
 }
