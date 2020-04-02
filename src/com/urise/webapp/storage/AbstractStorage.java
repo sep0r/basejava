@@ -6,57 +6,55 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void preSave(Integer uuid, Resume resume);
+    protected abstract void preSave(Integer index, Resume resume);
 
-    protected abstract void preUpdate(String uuid, Resume resume);
+    protected abstract void preUpdate(int index, Resume resume);
 
     protected abstract void preDelete(int index);
 
-    protected abstract Resume preGet(Integer index);
+    protected abstract Resume preGet(int index);
 
     protected abstract Integer getKey(String uuid);
 
-    protected abstract boolean checkIndex(Object index);
+    protected abstract boolean isExist(Integer index);
 
     @Override
     public void save(Resume resume) {
-        Integer key = (Integer) NotExistStorageException(resume.getUuid());
-        preSave(key, resume);
+        Integer index = (Integer) NotExistStorageException(resume.getUuid());
+        preSave(index, resume);
     }
 
     @Override
     public void update(Resume resume) {
-        String key = resume.getUuid();
-        preUpdate(key, resume);
+        int index = ExistStorageException(resume.getUuid());
+        preUpdate(index, resume);
     }
 
     @Override
     public void delete(String uuid) {
-        int index = (int) ExistStorageException(uuid);
+        int index = ExistStorageException(uuid);
         preDelete(index);
     }
 
     @Override
     public Resume get(String uuid) {
-        Integer index = (Integer) ExistStorageException(uuid);
+        int index = ExistStorageException(uuid);
         return preGet(index);
     }
 
-    private Object NotExistStorageException(String uuid) {
+    private Integer NotExistStorageException(String uuid) {
         Integer index = getKey(uuid);
-        if (checkIndex(index)) {
+        if (isExist(index)) {
             throw new ExistStorageException(uuid);
-        } else {
-            return index;
         }
+        return index;
     }
 
-    Object ExistStorageException(String uuid) {
+    private Integer ExistStorageException(String uuid) {
         Integer index = getKey(uuid);
-        if (!checkIndex(index)) {
+        if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
-        } else {
-            return index;
         }
+        return index;
     }
 }

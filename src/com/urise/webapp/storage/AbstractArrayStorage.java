@@ -21,8 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    public void preUpdate(String uuid, Resume resume) {
-        Integer index = (Integer) ExistStorageException(uuid);
+    public void preUpdate(int index, Resume resume) {
         storage[index] = resume;
     }
 
@@ -45,13 +44,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public Resume preGet(Integer index) {
+    public Resume preGet(int index) {
         return storage[index];
     }
 
     @Override
-    protected boolean checkIndex(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract Integer getKey(String uuid);
