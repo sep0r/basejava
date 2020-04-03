@@ -6,7 +6,7 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void preSave(Integer index, Resume resume);
+    protected abstract void preSave(int index, Resume resume);
 
     protected abstract void preUpdate(int index, Resume resume);
 
@@ -14,13 +14,13 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume preGet(int index);
 
-    protected abstract Integer getKey(String uuid);
+    protected abstract int getKey(String uuid);
 
-    protected abstract boolean isExist(Integer index);
+    protected abstract boolean isExist(int index);
 
     @Override
     public void save(Resume resume) {
-        Integer index = (Integer) NotExistStorageException(resume.getUuid());
+        int index = NotExistStorageException(resume.getUuid());
         preSave(index, resume);
     }
 
@@ -42,16 +42,16 @@ public abstract class AbstractStorage implements Storage {
         return preGet(index);
     }
 
-    private Integer NotExistStorageException(String uuid) {
-        Integer index = getKey(uuid);
+    private int NotExistStorageException(String uuid) {
+        int index = getKey(uuid);
         if (isExist(index)) {
             throw new ExistStorageException(uuid);
         }
         return index;
     }
 
-    private Integer ExistStorageException(String uuid) {
-        Integer index = getKey(uuid);
+    private int ExistStorageException(String uuid) {
+        int index = getKey(uuid);
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
         }

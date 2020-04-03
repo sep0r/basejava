@@ -8,21 +8,21 @@ import java.util.List;
 public class ListStorage extends AbstractStorage {
     private List<Resume> list = new ArrayList<>();
 
-    protected Integer getKey(String uuid) {
+    protected int getKey(String uuid) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 
     @Override
-    protected boolean isExist(Integer index) {
-        return index != null;
+    protected boolean isExist(int index) {
+        return index != -1;
     }
 
-    public void preSave(Integer uuid, Resume resume) {
+    public void preSave(int uuid, Resume resume) {
         list.add(resume);
     }
 

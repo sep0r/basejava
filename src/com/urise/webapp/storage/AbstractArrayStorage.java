@@ -12,7 +12,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void preSave(Integer uuid, Resume resume) {
+    public void preSave(int uuid, Resume resume) {
         if (size >= storage.length) {
             throw new StorageException("Storage is full", resume.getUuid());
         } else {
@@ -49,13 +49,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Integer index) {
+    protected boolean isExist(int index) {
         return index >= 0;
     }
 
-    protected abstract Integer getKey(String uuid);
+    protected abstract int getKey(String uuid);
 
-    protected abstract void addResume(Resume resume, Integer index);
+    protected abstract void addResume(Resume resume, int index);
 
-    protected abstract void deleteResume(Integer index);
+    protected abstract void deleteResume(int index);
 }
