@@ -12,21 +12,21 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void preSave(Object uuid, Resume resume) {
+    public void preSave(Object index, Resume resume) {
         if (size >= storage.length) {
             throw new StorageException("Storage is full", resume.getUuid());
         } else {
-            addResume(resume, uuid);
+            addResume(resume, (Integer) index);
             size++;
         }
     }
 
     public void preUpdate(Object index, Resume resume) {
-        storage[(Integer)index] = resume;
+        storage[(Integer) index] = resume;
     }
 
     public void preDelete(Object index) {
-        deleteResume(index);
+        deleteResume((Integer)index);
         storage[size - 1] = null;
         size--;
     }
@@ -50,12 +50,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object index) {
-        return (Integer)index >= 0;
+        return (Integer) index >= 0;
     }
 
-    protected abstract Object getKey(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
-    protected abstract void addResume(Resume resume, Object index);
+    protected abstract void addResume(Resume resume, int index);
 
-    protected abstract void deleteResume(Object index);
+    protected abstract void deleteResume(int index);
 }
