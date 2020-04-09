@@ -8,7 +8,7 @@ import java.util.List;
 public class ListStorage extends AbstractStorage {
     private List<Resume> list = new ArrayList<>();
 
-    protected Object getSearchKey (String uuid) {
+    protected Object getSearchKey(String uuid) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -27,23 +27,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     public void preUpdate(Object searchKey, Resume resume) {
-        list.set((int)searchKey, resume);
+        list.set((int) searchKey, resume);
     }
 
     public Resume preGet(Object searchKey) {
-        return list.get((int)searchKey);
+        return list.get((int) searchKey);
     }
 
     public void preDelete(Object searchKey) {
-        list.remove((int)searchKey);
+        list.remove((int) searchKey);
     }
 
     public int size() {
         return list.size();
     }
 
-    public Resume[] getAll() {
-        return list.toArray(new Resume[list.size()]);
+    public List<Resume> getAllSorted() {
+        return list.subList(0, size());
     }
 
     public void clear() {

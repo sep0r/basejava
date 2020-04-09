@@ -65,7 +65,7 @@ public class MainArray {
         if (ARRAY_STORAGE.size() == 0) {
             System.out.println("Empty");
         } else {
-            for (Resume r : ARRAY_STORAGE.getAll()) {
+            for (Resume r : ARRAY_STORAGE.getAllSorted()) {
                 System.out.println(r);
             }
         }

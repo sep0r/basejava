@@ -17,10 +17,10 @@ public abstract class AbstractStorageTest {
     protected static final String UUID_3 = "uuid3";
     protected static final String UUID_4 = "uuid4";
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1);
-    protected static final Resume RESUME_2 = new Resume(UUID_2);
-    protected static final Resume RESUME_3 = new Resume(UUID_3);
-    protected static final Resume RESUME_4 = new Resume(UUID_4);
+    protected static final Resume RESUME_1 = new Resume(UUID_1, "name1");
+    protected static final Resume RESUME_2 = new Resume(UUID_2, "name2");
+    protected static final Resume RESUME_3 = new Resume(UUID_3, "name3");
+    protected static final Resume RESUME_4 = new Resume(UUID_4, "name4");
 
     AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -48,7 +48,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        storage.update(new Resume(UUID_3));
+        Resume RESUME_3 = new Resume(UUID_3, "name33");
+        storage.update(RESUME_3);
         Assert.assertEquals(RESUME_3, storage.get(UUID_3));
     }
 
@@ -71,7 +72,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        Resume[] resumes = storage.getAll();
+        Resume[] resumes = storage.getAllSorted().toArray(new Resume[0]);
         Assert.assertEquals(3, resumes.length);
         Assert.assertSame(RESUME_1, resumes[0]);
         Assert.assertSame(RESUME_2, resumes[1]);
