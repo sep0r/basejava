@@ -1,16 +1,16 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.SortedArrayStorage;
+import com.urise.webapp.storage.MapResumeStorage;
 import com.urise.webapp.storage.Storage;
 
 public class MainTestArrayStorage {
-    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
+    private final static Storage ARRAY_STORAGE = new MapResumeStorage();
 
     public static void main(String[] args) {
 
         Resume r1 = new Resume("uuid3", "3");
-        Resume r2 = new Resume("uuid2", "2");
+        Resume r2 = new Resume("uuid2", "3");
         Resume r3 = new Resume("uuid1", "1");
 
         ARRAY_STORAGE.save(r1);
