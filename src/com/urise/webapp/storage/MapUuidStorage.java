@@ -12,12 +12,12 @@ public class MapUuidStorage extends AbstractStorage<String> {
 
     @Override
     protected void preSave(String searchKey, Resume resume) {
-        map.put((String) searchKey, resume);
+        map.put(searchKey, resume);
     }
 
     @Override
     protected void preUpdate(String searchKey, Resume resume) {
-        map.put((String) searchKey, resume);
+        map.put(searchKey, resume);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected boolean isExist(Integer searchKey) {
-        return (int) searchKey != -1;
+        return searchKey != -1;
     }
 
     @Override
@@ -30,12 +30,12 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     public void preUpdate(Integer searchKey, Resume resume) {
-        list.set((int) searchKey, resume);
+        list.set(searchKey, resume);
     }
 
     @Override
     public Resume preGet(Integer searchKey) {
-        return list.get((int) searchKey);
+        return list.get(searchKey);
     }
 
     @Override

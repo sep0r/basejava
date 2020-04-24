@@ -75,10 +75,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> list = storage.getAllSorted();
-        List<Resume> resumes = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
-        Assert.assertEquals(3, list.size());
-        Assert.assertEquals(resumes, list);
+        List<Resume> actualResumes = storage.getAllSorted();
+        List<Resume> expectedResumes = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+        Assert.assertEquals(expectedResumes, actualResumes);
     }
 
     @Test

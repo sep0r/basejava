@@ -1,13 +1,16 @@
 package com.urise.webapp.model;
 
 public class Link {
-    String address;
+    String name;
+    String url;
 
-    public Link(String address) {
-        this.address = address;
+    public Link(String name, String url) {
+        this.name = name;
+        this.url = url;
     }
 
-    public String getAddress() {
-        return address;
+    @Override
+    public String toString() {
+        return "Link{ " + name +" "+ url + " }";
     }
 }

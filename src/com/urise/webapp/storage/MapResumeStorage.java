@@ -22,12 +22,12 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
 
     @Override
     protected void preDelete(Resume r) {
-        map.remove(((Resume) r).getUuid());
+        map.remove(r.getUuid());
     }
 
     @Override
     protected Resume preGet(Resume r) {
-        return (Resume) r;
+        return r;
     }
 
     @Override
