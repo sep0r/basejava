@@ -1,26 +1,58 @@
 package com.urise.webapp.model;
 
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Organization {
     private String name;
-    private YearMonth startDate;
-    private YearMonth finishDate;
-    private String position;
-    private String content;
     private Link link;
+    private List<Position> positions = new ArrayList<>();
 
-    public Organization(String name, YearMonth startDate, YearMonth finishDate, String position, String content, String urlLink, String nameLink) {
+    public Organization(String name, String nameLink, String url, Position... positions) {
         this.name = name;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.position = position;
-        this.content = content;
-        this.link = new Link(nameLink, urlLink);
+        this.link = new Link(nameLink, url);
+        this.positions = Arrays.asList(positions);
     }
 
     @Override
     public String toString() {
-        return name + " " + startDate + " - " + finishDate + " " + position + " " + content + " " + link;
+        return "Organization{ " + name + " " + link + ", positions=" + positions + '}';
+    }
+
+    public static class Position {
+        private String position;
+        private YearMonth startDate;
+        private YearMonth finishDate;
+        private String content;
+
+        public Position(String position, YearMonth startDate, YearMonth finishDate, String content) {
+            this.position = position;
+            this.startDate = startDate;
+            this.finishDate = finishDate;
+            this.content = content;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public YearMonth getStartDate() {
+            return startDate;
+        }
+
+        public YearMonth getFinishDate() {
+            return finishDate;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        @Override
+        public String toString() {
+            return position + " " + startDate + " " + finishDate + " " + content;
+        }
     }
 }

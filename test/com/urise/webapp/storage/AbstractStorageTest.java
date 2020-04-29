@@ -10,20 +10,12 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.urise.webapp.storage.ResumeTestData.*;
 import static org.junit.Assert.assertEquals;
+
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
-
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String UUID_4 = "uuid4";
-
-    protected static final Resume RESUME_1 = new Resume(UUID_1, "name1");
-    protected static final Resume RESUME_2 = new Resume(UUID_2, "name2");
-    protected static final Resume RESUME_3 = new Resume(UUID_3, "name3");
-    protected static final Resume RESUME_4 = new Resume(UUID_4, "name4");
 
     AbstractStorageTest(Storage storage) {
         this.storage = storage;
