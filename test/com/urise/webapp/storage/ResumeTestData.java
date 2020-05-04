@@ -11,50 +11,33 @@ import java.util.Map;
 public class ResumeTestData {
     private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String UUID_4 = "uuid4";
+    public Resume addResume(String uuid, String fullName,
+                                      String telephone, String skype, String email, String linkedin, String github, String stackoverflow,
+                                      String textPers, String textObj,
+                                      String textAchiev, String textQualif,
+                                      List<Organization> textExper, List<Organization> textEduc) {
+        Resume resume = new Resume(uuid, fullName);
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1, "name1");
-    protected static final Resume RESUME_2 = new Resume(UUID_2, "name2");
-    protected static final Resume RESUME_3 = new Resume(UUID_3, "name3");
-    protected static final Resume RESUME_4 = new Resume(UUID_4, "name4");
+        Map<ContactType, String> mapContact = resume.getContact();
+        Map<SectionType, AbstractSection> textSection = resume.getTextSection();
 
-    static {
+        mapContact.put(ContactType.TELEPHONE, telephone);
+        mapContact.put(ContactType.SKYPE, skype);
+        mapContact.put(ContactType.EMAIL, email);
+        mapContact.put(ContactType.LINKEDIN, linkedin);
+        mapContact.put(ContactType.GITHUB, github);
+        mapContact.put(ContactType.STACKOVERFLOW, stackoverflow);
 
-        addContacts(RESUME_1, "+7(908) 565656", "skype1", "111@mail.ru", "http://111.ru/", "https://github.com/1", "https://stackoverflow.com/1");
-        addContacts(RESUME_2, "+7(950) 287444", "skype2", "222@yandex.ru", "http://222.ru/", "https://github.com/2", "https://stackoverflow.com/2");
-        addContacts(RESUME_3, "+7(901) 333445", "skype3", "3331@gmail.com", "http://333.ru/", "https://github.com/3", "https://stackoverflow.com/3");
+        textSection.put(SectionType.PERSONAL, new TextSection(textPers));
+        textSection.put(SectionType.OBJECTIVE, new TextSection(textObj));
 
-        addTextSection(RESUME_1, SectionType.PERSONAL, "RESUME_1 personal");
-        addTextSection(RESUME_2, SectionType.PERSONAL, "RESUME_2 personal");
-        addTextSection(RESUME_3, SectionType.PERSONAL, "RESUME_3 personal");
-        addTextSection(RESUME_1, SectionType.OBJECTIVE, "RESUME_1 objective");
-        addTextSection(RESUME_2, SectionType.OBJECTIVE, "RESUME_2 objective");
-        addTextSection(RESUME_3, SectionType.OBJECTIVE, "RESUME_3 objective");
+        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList(textAchiev)));
+        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList(textQualif)));
 
-        addListSection(RESUME_1, SectionType.ACHIEVEMENT, "RESUME_1 achievement1", "RESUME_1 achievement2");
-        addListSection(RESUME_2, SectionType.ACHIEVEMENT, "RESUME_2 achievement1", "RESUME_2 achievement2", "RESUME_2 achievement3");
-        addListSection(RESUME_3, SectionType.ACHIEVEMENT, "RESUME_3 achievement1", "RESUME_3 achievement2", "RESUME_3 achievement3", "RESUME_3 achievement4");
-        addListSection(RESUME_1, SectionType.QUALIFICATIONS, "RESUME_1 qualification1", "RESUME_1 qualification2");
-        addListSection(RESUME_2, SectionType.QUALIFICATIONS, "RESUME_2 qualification1", "RESUME_2 qualification2", "RESUME_2 qualification3");
-        addListSection(RESUME_3, SectionType.QUALIFICATIONS, "RESUME_3 qualification1", "RESUME_3 qualification2", "RESUME_3 qualification3", "RESUME_3 qualification4");
+        textSection.put(SectionType.EXPERIENCE, new OrganizationSection(textExper));
+        textSection.put(SectionType.EDUCATION, new OrganizationSection(textEduc));
 
-        addOrganizationSection(RESUME_1, SectionType.EXPERIENCE, "RESUME_1 header", "RESUME_1 link", "http://111.ru/",
-                new Organization.Position("RESUME_1 title.", YearMonth.of(2013, 10), YearMonth.of(2005, 1), "RESUME_1 experience"));
-        addOrganizationSection(RESUME_1, SectionType.EXPERIENCE, "RESUME_2 header", "RESUME_2 link", "http://222.ru/",
-                new Organization.Position("RESUME_2 title.", YearMonth.of(2013, 10), YearMonth.of(2005, 1), "RESUME_2 experience"));
-        addOrganizationSection(RESUME_1, SectionType.EXPERIENCE, "RESUME_3 header", "RESUME_3 link", "http://333.ru/",
-                new Organization.Position("RESUME_3 title.", YearMonth.of(2013, 10), YearMonth.of(2005, 1), "RESUME_3 experience"));
-
-        addOrganizationSection(RESUME_1, SectionType.EDUCATION, "RESUME_1 header", "RESUME_1 link", "http://111.ru/",
-                new Organization.Position("RESUME_1 title", YearMonth.of(2001, 1), YearMonth.of(2002, 5), "RESUME_1 education"));
-        addOrganizationSection(RESUME_2, SectionType.EDUCATION, "RESUME_2 header", "RESUME_2 link", "http://111.ru/",
-                new Organization.Position("RESUME_2 title", YearMonth.of(2002, 2), YearMonth.of(2014, 3), "RESUME_2 education"));
-        addOrganizationSection(RESUME_3, SectionType.EDUCATION, "RESUME_3 header", "RESUME_3 link", "http://111.ru/",
-                new Organization.Position("RESUME_3 title1", YearMonth.of(2003, 2), YearMonth.of(2011, 5), "RESUME_3 education1"));
-
+        return resume;
     }
 
     public static void main(String[] args) {
@@ -212,32 +195,5 @@ public class ResumeTestData {
 
         ARRAY_STORAGE.save(resume);
         System.out.println("Get: " + ARRAY_STORAGE.get("123"));
-    }
-
-    private static void addContacts(Resume resume, String... contacts) {
-        Map<ContactType, String> mapContact = resume.getContact();
-        mapContact.put(ContactType.TELEPHONE, contacts[0]);
-        mapContact.put(ContactType.SKYPE, contacts[1]);
-        mapContact.put(ContactType.EMAIL, contacts[2]);
-        mapContact.put(ContactType.LINKEDIN, contacts[3]);
-        mapContact.put(ContactType.GITHUB, contacts[4]);
-        mapContact.put(ContactType.STACKOVERFLOW, contacts[5]);
-    }
-
-    private static void addTextSection(Resume resume, SectionType type, String text) {
-        Map<SectionType, AbstractSection> textSection = resume.getTextSection();
-        textSection.put(type, new TextSection(text));
-    }
-
-    private static void addListSection(Resume resume, SectionType type, String... text) {
-        Map<SectionType, AbstractSection> sections = resume.getTextSection();
-        sections.put(type, new ListSection(Arrays.asList(text)));
-    }
-
-    private static void addOrganizationSection(Resume resume, SectionType type, String name, String nameLink, String url, Organization.Position... positions) {
-        Map<SectionType, AbstractSection> sections = resume.getTextSection();
-        List<Organization> orgText = new ArrayList<>();
-        orgText.add(new Organization(name, nameLink, url, positions));
-        sections.put(type, new OrganizationSection(orgText));
     }
 }
