@@ -11,31 +11,31 @@ import java.util.Map;
 public class ResumeTestData {
     private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
-    public Resume addResume(String uuid, String fullName,
-                                      String telephone, String skype, String email, String linkedin, String github, String stackoverflow,
-                                      String textPers, String textObj,
-                                      String textAchiev, String textQualif,
-                                      List<Organization> textExper, List<Organization> textEduc) {
+    public Resume addResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
         Map<ContactType, String> mapContact = resume.getContact();
         Map<SectionType, AbstractSection> textSection = resume.getTextSection();
 
-        mapContact.put(ContactType.TELEPHONE, telephone);
-        mapContact.put(ContactType.SKYPE, skype);
-        mapContact.put(ContactType.EMAIL, email);
-        mapContact.put(ContactType.LINKEDIN, linkedin);
-        mapContact.put(ContactType.GITHUB, github);
-        mapContact.put(ContactType.STACKOVERFLOW, stackoverflow);
+        mapContact.put(ContactType.TELEPHONE, "telephone");
+        mapContact.put(ContactType.SKYPE, "skype");
+        mapContact.put(ContactType.EMAIL, "email");
+        mapContact.put(ContactType.LINKEDIN, "linkedin");
+        mapContact.put(ContactType.GITHUB, "github");
+        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflow");
 
-        textSection.put(SectionType.PERSONAL, new TextSection(textPers));
-        textSection.put(SectionType.OBJECTIVE, new TextSection(textObj));
+        textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
+        textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
 
-        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList(textAchiev)));
-        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList(textQualif)));
+        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev")));
+        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif")));
 
-        textSection.put(SectionType.EXPERIENCE, new OrganizationSection(textExper));
-        textSection.put(SectionType.EDUCATION, new OrganizationSection(textEduc));
+        textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
+                new Organization.Position("RESUME_1 title.", YearMonth.of(2013, 10),
+                        YearMonth.of(2005, 1), "RESUME_1 experience")))));
+        textSection.put(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
+                new Organization.Position("RESUME_1 title.", YearMonth.of(2013, 10),
+                        YearMonth.of(2005, 1), "RESUME_1 education")))));
 
         return resume;
     }
