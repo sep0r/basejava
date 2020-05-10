@@ -1,11 +1,14 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Organization {
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private Link link;
     private List<Position> positions = new ArrayList<>();
@@ -21,7 +24,7 @@ public class Organization {
         return "Organization{ " + name + " " + link + ", positions=" + positions + '}';
     }
 
-    public static class Position {
+    public static class Position implements Serializable {
         private String position;
         private YearMonth startDate;
         private YearMonth finishDate;

@@ -11,7 +11,7 @@ import java.util.Map;
 public class ResumeTestData {
     private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
-    public Resume addResume(String uuid, String fullName) {
+    public Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
         Map<ContactType, String> mapContact = resume.getContact();

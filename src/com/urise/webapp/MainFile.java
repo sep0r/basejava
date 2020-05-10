@@ -3,10 +3,8 @@ package com.urise.webapp;
 import java.io.File;
 
 public class MainFile {
-    static File dir1;
-
     public static void main(String[] args) {
-        String filePath = "C:\\Users\\Dem\\IdeaProjects\\basejava";
+//        String filePath = "C:\\Users\\Dem\\IdeaProjects\\basejava";
 //
 //        File file = new File(filePath);
 //        try {
@@ -14,47 +12,29 @@ public class MainFile {
 //        } catch (IOException e) {
 //            throw new RuntimeException("Error", e);
 //        }
-//
-//        File dir = new File("./src/ru/javawebinar/basejava");
-//        System.out.println(dir.isDirectory());
-//        String[] list = dir.list();
-//        if (list != null) {
-//            for (String name : list) {
-//                System.out.println(name);
-//            }
-//        }
+
+        File dir = new File("C:\\Users\\Dem\\IdeaProjects\\basejava");
+        System.out.println(dir.isDirectory());
+        String[] list = dir.list();
+        bypass(dir, "");
 
 //        try (FileInputStream fis = new FileInputStream(filePath)) {
 //            System.out.println(fis.read());
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
-
-        dir1 = new File(filePath);
-        if (dir1.isDirectory()) {
-            bypass();
-        }
-
     }
 
-    private static void bypass() {
-        File[] files = dir1.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            File stroca = files[i];
-            dir1 = new File(stroca.getAbsolutePath());
-            boolean catalog1 = dir1.isDirectory();
-            if (catalog1) {
-                bypass();
-            }
-        }
-        if (files != null) {
-            System.out.println(dir1.getParentFile());
-            System.out.println("--------------------------------------------");
-            for (File name : files) {
+    private static void bypass(File dir, String string) {
+        File[] files = dir.listFiles();
 
-                System.out.println(name.getName());
+        for (File file : files) {
+            if (file.isDirectory()) {
+                System.out.println(string + "d: " + file.getName());
+                bypass(file, string + "  ");
+            } else if (file.isFile()) {
+                System.out.println(string + "f: " + file.getName());
             }
-            System.out.println("--------------------------------------------");
         }
     }
 }

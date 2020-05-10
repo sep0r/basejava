@@ -1,6 +1,10 @@
 package com.urise.webapp.model;
 
-public class Link {
+import java.io.Serializable;
+
+public class Link implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private String url;
 
@@ -11,6 +15,6 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link{ " + name +" "+ url + " }";
+        return "Link{ " + name + " " + url + " }";
     }
 }
