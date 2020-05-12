@@ -11,27 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
 
-    protected abstract void doWrite(Resume resume, OutputStream os) throws IOException;
+    Strategy strategy;
 
-    protected abstract Resume doRead(InputStream is) throws IOException;
-
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir, Strategy strategy) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
+        this.strategy = strategy;
     }
 
     @Override
     protected void preSave(Path path, Resume resume) {
         try {
             Files.createFile(path);
-            doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            preUpdate(path, resume);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,9 +40,9 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void preUpdate(Path path, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            strategy.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("Path write error", resume.getUuid(), e);
+            throw new StorageException("Update error", path.getFileName().toString(), e);
         }
     }
 
@@ -51,14 +51,14 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         try {
             Files.deleteIfExists(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new StorageException("Delete error", path.getFileName().toString());
         }
     }
 
     @Override
     protected Resume preGet(Path path) {
         try {
-            return doRead(new BufferedInputStream(Files.newInputStream(path)));
+            return strategy.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Path read error", path.getFileName().toString(), e);
         }
@@ -76,32 +76,24 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getAll() {
-        List<Resume> storage = new ArrayList<>();
-        try {
-           storage = Files.list(directory).map(this::preGet).collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return storage;
+        return stream().map(this::preGet).collect(Collectors.toList());
     }
 
     @Override
     public int size() {
-        int s = 0;
-        try {
-            s = (int) Files.list(directory).count();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return s;
+        return (int) stream().count();
     }
 
     @Override
     public void clear() {
+        stream().forEach(this::preDelete);
+    }
+
+    private Stream<Path> stream() {
         try {
-            Files.list(directory).forEach(this::preDelete);
+            return Files.list(directory);
         } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
+            throw new StorageException("NullPointerException", null);
         }
     }
 }
