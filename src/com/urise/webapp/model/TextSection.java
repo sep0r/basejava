@@ -5,6 +5,9 @@ public class TextSection extends AbstractSection {
 
     private String text;
 
+    public TextSection() {
+    }
+
     public String getText() {
         return text;
     }

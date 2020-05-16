@@ -7,6 +7,9 @@ public class ListSection extends AbstractSection {
 
     private List<String> listText;
 
+    public ListSection() {
+    }
+
     public ListSection(List<String> listText) {
         this.listText = listText;
     }

@@ -2,7 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.*;
 
-import java.time.YearMonth;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +17,12 @@ public class ResumeTestData {
         Map<ContactType, String> mapContact = resume.getContact();
         Map<SectionType, AbstractSection> textSection = resume.getTextSection();
 
-        mapContact.put(ContactType.TELEPHONE, "telephone");
-        mapContact.put(ContactType.SKYPE, "skype");
-        mapContact.put(ContactType.EMAIL, "email");
-        mapContact.put(ContactType.LINKEDIN, "linkedin");
-        mapContact.put(ContactType.GITHUB, "github");
-        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflow");
+        mapContact.put(ContactType.TELEPHONE, "telephoneRESUME_1");
+        mapContact.put(ContactType.SKYPE, "skypeRESUME_1");
+        mapContact.put(ContactType.EMAIL, "emailRESUME_1");
+        mapContact.put(ContactType.LINKEDIN, "linkedinRESUME_1");
+        mapContact.put(ContactType.GITHUB, "githubRESUME_1");
+        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflowRESUME_1");
 
         textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
         textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
@@ -31,11 +31,11 @@ public class ResumeTestData {
         textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif")));
 
         textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
-                new Organization.Position("RESUME_1 title.", YearMonth.of(2013, 10),
-                        YearMonth.of(2005, 1), "RESUME_1 experience")))));
+                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
+                        LocalDate.of(2002,05,12), "RESUME_1 experience")))));
         textSection.put(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
-                new Organization.Position("RESUME_1 title.", YearMonth.of(2013, 10),
-                        YearMonth.of(2005, 1), "RESUME_1 education")))));
+                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
+                        LocalDate.of(2002,05,12), "RESUME_1 education")))));
 
         return resume;
     }
@@ -112,37 +112,37 @@ public class ResumeTestData {
 
 /////////////////////////////////////////OrganizationSection///////////////////////////////////////////////////////////
         Organization organization1 = new Organization("Java Online Projects", "Javaops.", "http://javaops.ru/",
-                new Organization.Position("Автор проекта.", YearMonth.of(2013, 10), YearMonth.now(),
+                new Organization.Position("Автор проекта.", LocalDate.of(2013, 10,2), LocalDate.now(),
                         "Создание, организация и проведение Java онлайн проектов и стажировок."));
         Organization organization2 = new Organization("Wrike", "Wrike", "https://www.wrike.com/",
-                new Organization.Position("Старший разработчик (backend)", YearMonth.of(2014, 10), YearMonth.of(2016, 1),
+                new Organization.Position("Старший разработчик (backend)", LocalDate.of(2014, 10,2), LocalDate.of(2016, 1,2),
                         "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis," +
                                 " Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."));
         Organization organization3 = new Organization("RIT Center", "RIT Center", null,
-                new Organization.Position("Java архитектор", YearMonth.of(2014, 4), YearMonth.of(2014, 10),
+                new Organization.Position("Java архитектор", LocalDate.of(2014, 4,2), LocalDate.of(2014, 10,2),
                         "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование," +
                                 " ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части " +
                                 "системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). " +
                                 "Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, " +
                                 "Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python"));
         Organization organization4 = new Organization("Luxoft (Deutsche Bank)", "Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
-                new Organization.Position("Ведущий программист.", YearMonth.of(2010, 12), YearMonth.of(2012, 4),
+                new Organization.Position("Ведущий программист.", LocalDate.of(2010, 12,2), LocalDate.of(2012, 4,2),
                         "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle)." +
                                 " Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в" +
                                 " области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."));
         Organization organization5 = new Organization("Yota", "Yota", "https://www.yota.ru/",
-                new Organization.Position("Ведущий специалист", YearMonth.of(2008, 6), YearMonth.of(2010, 12),
+                new Organization.Position("Ведущий специалист", LocalDate.of(2008, 6,2), LocalDate.of(2010, 12,2),
                         "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4," +
                                 " JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента" +
                                 " (Python/ Jython, Django, ExtJS)"));
         Organization organization6 = new Organization("Enkata", "Enkata", "http://enkata.com/",
-                new Organization.Position("Разработчик ПО", YearMonth.of(2007, 3), YearMonth.of(2008, 6),
+                new Organization.Position("Разработчик ПО", LocalDate.of(2007, 3,2), LocalDate.of(2008, 6,2),
                         "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining)."));
         Organization organization7 = new Organization("Siemens AG", "Siemens AG", "https://www.siemens.com/ru/ru/home.html",
-                new Organization.Position("Разработчик ПО", YearMonth.of(2005, 1), YearMonth.of(2007, 2),
+                new Organization.Position("Разработчик ПО", LocalDate.of(2005, 1,2), LocalDate.of(2007, 2,2),
                         "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix)."));
         Organization organization8 = new Organization("Alcatel", "Alcatel", "http://www.alcatel.ru/",
-                new Organization.Position("Инженер по аппаратному и программному тестированию", YearMonth.of(1997, 9), YearMonth.of(2005, 1),
+                new Organization.Position("Инженер по аппаратному и программному тестированию", LocalDate.of(1997, 9,2), LocalDate.of(2005, 1,2),
                         "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."));
 
         List<Organization> listOrg1 = new ArrayList<>();
@@ -159,25 +159,25 @@ public class ResumeTestData {
         textSection.put(SectionType.EXPERIENCE, orgText1);
 
         Organization organizationED1 = new Organization("Coursera", "Coursera", "https://www.coursera.org/course/progfun",
-                new Organization.Position(null, YearMonth.of(2013, 3), YearMonth.of(2013, 5),
+                new Organization.Position(null, LocalDate.of(2013, 3,2), LocalDate.of(2013, 5,2),
                         "\"Functional Programming Principles in Scala\" by Martin Odersky"));
         Organization organizationED2 = new Organization("Luxoft", "Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
-                new Organization.Position(null, YearMonth.of(2011, 3), YearMonth.of(2011, 4),
+                new Organization.Position(null, LocalDate.of(2011, 3,2), LocalDate.of(2011, 4,2),
                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\""));
         Organization organizationED3 = new Organization("Siemens AG", "Siemens AG", "http://www.siemens.ru/",
-                new Organization.Position(null, YearMonth.of(2005, 1), YearMonth.of(2005, 4),
+                new Organization.Position(null, LocalDate.of(2005, 1,2), LocalDate.of(2005, 4,2),
                         "3 месяца обучения мобильным IN сетям (Берлин)"));
         Organization organizationED4 = new Organization("Alcatel", "Alcatel", "http://www.alcatel.ru/",
-                new Organization.Position(null, YearMonth.of(1997, 9), YearMonth.of(1998, 3),
+                new Organization.Position(null, LocalDate.of(1997, 9,2), LocalDate.of(1998, 3,2),
                         "6 месяцев обучения цифровым телефонным сетям (Москва)"));
         Organization organizationED5 = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "ifmo", "http://www.ifmo.ru/",
-                new Organization.Position(null, YearMonth.of(1993, 9), YearMonth.of(1996, 7),
+                new Organization.Position(null, LocalDate.of(1993, 9,2), LocalDate.of(1996, 7,2),
                         "Аспирантура (программист С, С++)"),
-                new Organization.Position(null, YearMonth.of(1987, 9), YearMonth.of(1993, 7),
+                new Organization.Position(null, LocalDate.of(1987, 9,2), LocalDate.of(1993, 7,2),
                         "Инженер (программист Fortran, C)"));
         Organization organizationED6 = new Organization("Заочная физико-техническая школа при МФТИ", "mipt", "http://www.school.mipt.ru/",
-                new Organization.Position(null, YearMonth.of(1984, 9), YearMonth.of(1987, 6),
+                new Organization.Position(null, LocalDate.of(1984, 9,2), LocalDate.of(1987, 6,2),
                         "Закончил с отличием"));
 
         List<Organization> listOrg2 = new ArrayList<>();

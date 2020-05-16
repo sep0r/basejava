@@ -30,9 +30,9 @@ public abstract class AbstractStorageTest {
 
     static {
         RESUME_1 = new ResumeTestData().createResume(UUID_1, "name1");
-        RESUME_2 = new ResumeTestData().createResume(UUID_2, "name2");
-        RESUME_3 = new ResumeTestData().createResume(UUID_3, "name3");
-        RESUME_4 = new ResumeTestData().createResume(UUID_4, "name4");
+        RESUME_2 = new Resume(UUID_2, "name2");
+        RESUME_3 = new Resume(UUID_3, "name3");
+        RESUME_4 = new Resume(UUID_4, "name4");
     }
 
     AbstractStorageTest(Storage storage) {
@@ -50,7 +50,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() throws Exception {
         storage.save(RESUME_4);
-        Assert.assertSame(RESUME_4, storage.get(UUID_4));
+        Assert.assertEquals(RESUME_4, storage.get(UUID_4));
         Assert.assertEquals(4, storage.size());
     }
 

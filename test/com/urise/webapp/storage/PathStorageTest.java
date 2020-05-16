@@ -2,9 +2,9 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.storage.serializer.ObjectStreamSerializer;
 
-public class ObjectStreamPathStorageTest extends AbstractStorageTest {
+public class PathStorageTest extends AbstractStorageTest {
 
-    public ObjectStreamPathStorageTest() {
+    public PathStorageTest() {
         super(new PathStorage(STORAGE_DIR.getAbsolutePath(), new ObjectStreamSerializer()));
     }
 }
