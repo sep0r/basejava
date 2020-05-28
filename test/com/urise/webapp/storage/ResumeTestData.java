@@ -27,8 +27,8 @@ public class ResumeTestData {
         textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
         textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
 
-        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev")));
-        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif")));
+        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev1","textAchiev2")));
+        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif","textQualif2","textQualif3")));
 
         textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
                 new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),

@@ -19,13 +19,31 @@ public class Organization implements Serializable {
     private Link link;
     private List<Position> positions = new ArrayList<>();
 
-    public Organization() {
+    public Organization(String name, String nameLink, String url, List<Position> positions) {
+        this.name = name;
+        this.link = new Link(nameLink, url);
+        this.positions = positions;
     }
 
     public Organization(String name, String nameLink, String url, Position... positions) {
         this.name = name;
         this.link = new Link(nameLink, url);
         this.positions = Arrays.asList(positions);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public Organization() {
     }
 
     @Override
