@@ -31,6 +31,12 @@ public class Organization implements Serializable {
         this.positions = Arrays.asList(positions);
     }
 
+    public Organization(String name, Link link, Position positions) {
+        this.name = name;
+        this.link = link;
+        this.positions = Arrays.asList(positions);
+    }
+
     public String getName() {
         return name;
     }
@@ -64,7 +70,11 @@ public class Organization implements Serializable {
             this.position = position;
             this.startDate = startDate;
             this.finishDate = finishDate;
-            this.content = content;
+            if (content == null) {
+                this.content = "";
+            } else {
+                this.content = content;
+            }
         }
 
         public Position() {

@@ -24,7 +24,11 @@ public class Link implements Serializable {
 
     public Link(String name, String url) {
         this.name = name;
-        this.url = url;
+        if (url == null) {
+            this.url = "";
+        } else {
+            this.url = url;
+        }
     }
 
     @Override
