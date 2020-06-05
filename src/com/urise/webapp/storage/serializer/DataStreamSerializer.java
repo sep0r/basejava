@@ -87,21 +87,21 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private <T> void forEachWrite(Collection<T> type, DataOutputStream dos, forEachWriter<T> writer) throws IOException {
+    private <T> void forEachWrite(Collection<T> type, DataOutputStream dos, ForEachWriter<T> writer) throws IOException {
         dos.writeInt(type.size());
         for (T t : type) {
             writer.write(t);
         }
     }
 
-    private <T> void forEachRead(DataInputStream dis, forEachReader<T> reader) throws IOException {
+    private void forEachRead(DataInputStream dis, ForEachReader reader) throws IOException {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             reader.read();
         }
     }
 
-    private <T> List<T> forEachListRead(DataInputStream dis, forEachListReader<T> reader) throws IOException {
+    private <T> List<T> forEachListRead(DataInputStream dis, ForEachListReader<T> reader) throws IOException {
         List<T> list = new ArrayList<>();
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
@@ -110,15 +110,15 @@ public class DataStreamSerializer implements StreamSerializer {
         return list;
     }
 
-    private interface forEachWriter<T> {
+    private interface ForEachWriter<T> {
         void write(T t) throws IOException;
     }
 
-    private interface forEachReader<T> {
+    private interface ForEachReader {
         void read() throws IOException;
     }
 
-    private interface forEachListReader<T> {
+    private interface ForEachListReader<T> {
         T read() throws IOException;
     }
 }

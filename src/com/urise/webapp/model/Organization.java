@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
@@ -57,6 +58,21 @@ public class Organization implements Serializable {
         return "Organization{ " + name + " " + link + ", positions=" + positions + '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(link, that.link) &&
+                Objects.equals(positions, that.positions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, link, positions);
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         private String position;
@@ -99,6 +115,22 @@ public class Organization implements Serializable {
         @Override
         public String toString() {
             return position + " " + startDate + " " + finishDate + " " + content;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Position position1 = (Position) o;
+            return Objects.equals(position, position1.position) &&
+                    Objects.equals(startDate, position1.startDate) &&
+                    Objects.equals(finishDate, position1.finishDate) &&
+                    Objects.equals(content, position1.content);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(position, startDate, finishDate, content);
         }
     }
 }
