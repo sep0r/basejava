@@ -4,7 +4,6 @@ import com.urise.webapp.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,30 +13,30 @@ public class ResumeTestData {
     public Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
-        Map<ContactType, String> mapContact = resume.getContact();
-        Map<SectionType, AbstractSection> textSection = resume.getTextSection();
-
-        mapContact.put(ContactType.TELEPHONE, "telephoneRESUME_1");
-        mapContact.put(ContactType.SKYPE, "skypeRESUME_1");
-        mapContact.put(ContactType.EMAIL, "emailRESUME_1");
-        mapContact.put(ContactType.LINKEDIN, "linkedinRESUME_1");
-        mapContact.put(ContactType.GITHUB, "githubRESUME_1");
-        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflowRESUME_1");
-
-        textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
-        textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
-
-        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev1","textAchiev2")));
-        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif","textQualif2","textQualif3")));
-
-        textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
-                new Organization("RESUME_1 header", new Link("asas",null),
-                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
-                        LocalDate.of(2002,05,12), "RESUME_1 experience")))));
-        textSection.put(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(
-                new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
-                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
-                        LocalDate.of(2002,05,12), null)))));
+//        Map<ContactType, String> mapContact = resume.getContact();
+//        Map<SectionType, AbstractSection> textSection = resume.getTextSection();
+//
+//        mapContact.put(ContactType.TELEPHONE, "telephoneRESUME_1");
+//        mapContact.put(ContactType.SKYPE, "skypeRESUME_1");
+//        mapContact.put(ContactType.EMAIL, "emailRESUME_1");
+//        mapContact.put(ContactType.LINKEDIN, "linkedinRESUME_1");
+//        mapContact.put(ContactType.GITHUB, "githubRESUME_1");
+//        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflowRESUME_1");
+//
+//        textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
+//        textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
+//
+//        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev1","textAchiev2")));
+//        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif","textQualif2","textQualif3")));
+//
+//        textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
+//                new Organization("RESUME_1 header", new Link("asas",null),
+//                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
+//                        LocalDate.of(2002,05,12), "RESUME_1 experience")))));
+//        textSection.put(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(
+//                new Organization("RESUME_1 header", "RESUME_1 link", "http://111.ru/",
+//                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
+//                        LocalDate.of(2002,05,12), null)))));
 
         return resume;
     }
