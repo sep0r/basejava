@@ -19,10 +19,10 @@ public abstract class AbstractStorageTest {
             new File("C:\\Users\\Dem\\IdeaProjects\\basejava\\storage");
     protected Storage storage;
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String UUID_4 = "uuid4";
+    protected static final String UUID_1 = "9668f697-3642-422b-a201-7272514dba8b";
+    protected static final String UUID_2 = "b8a4d227-b9cf-491f-94d1-e33e9c3bb22f";
+    protected static final String UUID_3 = "3a2443b0-1c27-4ac9-b54d-3f3982d5b118";
+    protected static final String UUID_4 = "d02f12f7-f7eb-48c5-8afa-48126f230745";
 
     protected static final Resume RESUME_1;
     protected static final Resume RESUME_2;

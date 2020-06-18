@@ -1,7 +1,7 @@
-package com.urise.webapp.util;
+package com.urise.webapp.sql;
 
 import com.urise.webapp.exception.StorageException;
-import com.urise.webapp.sql.ConnectionFactory;
+import com.urise.webapp.util.ABlockOfCode;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
