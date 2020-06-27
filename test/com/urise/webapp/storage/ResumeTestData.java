@@ -13,16 +13,16 @@ public class ResumeTestData {
     public Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
-//        Map<ContactType, String> mapContact = resume.getContact();
-//        Map<SectionType, AbstractSection> textSection = resume.getTextSection();
-//
-//        mapContact.put(ContactType.TELEPHONE, "telephoneRESUME_1");
-//        mapContact.put(ContactType.SKYPE, "skypeRESUME_1");
-//        mapContact.put(ContactType.EMAIL, "emailRESUME_1");
-//        mapContact.put(ContactType.LINKEDIN, "linkedinRESUME_1");
-//        mapContact.put(ContactType.GITHUB, "githubRESUME_1");
-//        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflowRESUME_1");
-//
+        Map<ContactType, String> mapContact = resume.getContact();
+        Map<SectionType, AbstractSection> textSection = resume.getTextSection();
+
+        mapContact.put(ContactType.TELEPHONE, "telephoneRESUME_"+fullName);
+        mapContact.put(ContactType.SKYPE, "skypeRESUME_"+fullName);
+        mapContact.put(ContactType.EMAIL, "emailRESUME_"+fullName);
+        mapContact.put(ContactType.LINKEDIN, "linkedinRESUME_"+fullName);
+        mapContact.put(ContactType.GITHUB, "githubRESUME_"+fullName);
+        mapContact.put(ContactType.STACKOVERFLOW, "stackoverflowRESUME_"+fullName);
+
 //        textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
 //        textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
 //
