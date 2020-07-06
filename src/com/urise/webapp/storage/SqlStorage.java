@@ -11,11 +11,6 @@ import java.util.*;
 public class SqlStorage implements Storage {
     private final SqlHelper sqlHelper;
 
-    String ADD_NAME = "INSERT INTO resume (full_name, uuid) VALUES (?,?)";
-    String ADD_CONTACT = "INSERT INTO contact (value, resume_uuid, type) VALUES (?,?,?)";
-    String UPDATE_NAME = "UPDATE resume SET full_name = ? WHERE uuid = ?";
-    String UPDATE_CONTACT = "UPDATE contact SET value = ? WHERE resume_uuid = ? and type = ?";
-
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
@@ -58,7 +53,7 @@ public class SqlStorage implements Storage {
     public void update(Resume r) {
         sqlHelper.transactionalExecute(conn -> {
             try (PreparedStatement prepareStatement = conn
-                    .prepareStatement(UPDATE_NAME)) {
+                    .prepareStatement("UPDATE resume SET full_name = ? WHERE uuid = ?")) {
                 prepareStatement.setString(1, r.getFullName());
                 prepareStatement.setString(2, r.getUuid());
                 prepareStatement.execute();
@@ -70,8 +65,7 @@ public class SqlStorage implements Storage {
                 preparedStatement.setString(1, r.getUuid());
                 preparedStatement.executeUpdate();
             }
-            queryMethod(r, conn, UPDATE_CONTACT);
-            queryMethod(r, conn, ADD_CONTACT);
+            queryMethod(r, conn, "INSERT INTO contact (value, resume_uuid, type) VALUES (?,?,?)");
             return null;
         });
     }
@@ -80,12 +74,12 @@ public class SqlStorage implements Storage {
     public void save(Resume r) {
         sqlHelper.transactionalExecute(conn -> {
                     try (PreparedStatement prepareStatement = conn
-                            .prepareStatement(ADD_NAME)) {
+                            .prepareStatement("INSERT INTO resume (full_name, uuid) VALUES (?,?)")) {
                         prepareStatement.setString(1, r.getFullName());
                         prepareStatement.setString(2, r.getUuid());
                         prepareStatement.execute();
                     }
-                    queryMethod(r, conn, ADD_CONTACT);
+                    queryMethod(r, conn, "INSERT INTO contact (value, resume_uuid, type) VALUES (?,?,?)");
                     return null;
                 }
         );
@@ -126,11 +120,10 @@ public class SqlStorage implements Storage {
                     while (rs.next()) {
                         String uuid = rs.getString("uuid");
                         String fullName = rs.getString("full_name");
-                        resumeMap.putIfAbsent(uuid, new Resume(uuid, fullName));
                         String type = rs.getString("type");
                         String value = rs.getString("value");
                         if (type != null) {
-                            resumeMap.get(uuid).addContact(ContactType.valueOf(type), value);
+                            resumeMap.computeIfAbsent(uuid, u -> new Resume(uuid, fullName)).addContact(ContactType.valueOf(type), value);
                         }
                     }
                     return new ArrayList<>(resumeMap.values());
