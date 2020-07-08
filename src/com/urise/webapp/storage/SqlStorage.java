@@ -65,7 +65,7 @@ public class SqlStorage implements Storage {
                 preparedStatement.setString(1, r.getUuid());
                 preparedStatement.executeUpdate();
             }
-            queryMethod(r, conn, "INSERT INTO contact (value, resume_uuid, type) VALUES (?,?,?)");
+            insertContact(r, conn);
             return null;
         });
     }
@@ -79,15 +79,15 @@ public class SqlStorage implements Storage {
                         prepareStatement.setString(2, r.getUuid());
                         prepareStatement.execute();
                     }
-                    queryMethod(r, conn, "INSERT INTO contact (value, resume_uuid, type) VALUES (?,?,?)");
+                    insertContact(r, conn);
                     return null;
                 }
         );
     }
 
-    void queryMethod(Resume r, Connection connection, String queryContact) throws SQLException {
+    void insertContact(Resume r, Connection connection) throws SQLException {
         try (PreparedStatement ps = connection
-                .prepareStatement(queryContact)) {
+                .prepareStatement("INSERT INTO contact (value, resume_uuid, type) VALUES (?,?,?)")) {
             for (Map.Entry<ContactType, String> e : r.getContact().entrySet()) {
                 ps.setString(1, e.getValue());
                 ps.setString(2, r.getUuid());
@@ -120,10 +120,11 @@ public class SqlStorage implements Storage {
                     while (rs.next()) {
                         String uuid = rs.getString("uuid");
                         String fullName = rs.getString("full_name");
+                        Resume r = resumeMap.computeIfAbsent(uuid, u -> new Resume(uuid, fullName));
                         String type = rs.getString("type");
                         String value = rs.getString("value");
                         if (type != null) {
-                            resumeMap.computeIfAbsent(uuid, u -> new Resume(uuid, fullName)).addContact(ContactType.valueOf(type), value);
+                            r.addContact(ContactType.valueOf(type), value);
                         }
                     }
                     return new ArrayList<>(resumeMap.values());
