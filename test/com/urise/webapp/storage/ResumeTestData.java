@@ -4,6 +4,7 @@ import com.urise.webapp.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +24,12 @@ public class ResumeTestData {
         mapContact.put(ContactType.GITHUB, "githubRESUME_"+fullName);
         mapContact.put(ContactType.STACKOVERFLOW, "stackoverflowRESUME_"+fullName);
 
-//        textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
-//        textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
-//
-//        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev1","textAchiev2")));
-//        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif","textQualif2","textQualif3")));
-//
+        textSection.put(SectionType.PERSONAL, new TextSection("textPers"));
+        textSection.put(SectionType.OBJECTIVE, new TextSection("textObj"));
+
+        textSection.put(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList("textAchiev1","textAchiev2","textAchiev3","textAchiev4","textAchiev5")));
+        textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif","textQualif2","textQualif3")));
+
 //        textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
 //                new Organization("RESUME_1 header", new Link("asas",null),
 //                new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
