@@ -1,7 +1,8 @@
 package com.urise.webapp.web;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.SqlStorage;
+import com.urise.webapp.storage.Storage;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
+    private final Storage storage = Config.getINSTANCE().getStorage();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
     }
@@ -20,20 +22,11 @@ public class ResumeServlet extends HttpServlet {
 //        response.setHeader("Content-Type", "text/html; charset=UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         String uuid = request.getParameter("uuid");
-//        response.getWriter().write(uuid == null ? "Hello Resumes!" : "Hello " + name + '!');
-        List<Resume> resumeList = new SqlStorage(
-                "jdbc:postgresql://localhost:5432/resumes",
-                "postgres",
-                "455600")
-                .getAllSorted();
+        List<Resume> resumeList = storage.getAllSorted();
         StringBuilder addResume = new StringBuilder();
         Resume resume = null;
         if (uuid != null) {
-            resume = new SqlStorage(
-                    "jdbc:postgresql://localhost:5432/resumes",
-                    "postgres",
-                    "455600")
-                    .get(uuid);
+            resume = storage.get(uuid);
         }
         for (Resume r : resumeList) {
             addResume.append("<tr>\n<td>").append(r.getUuid()).append("</td>\n<td>").append(r.getFullName()).append("</td>\n</tr>\n");
