@@ -30,7 +30,7 @@ public class SqlStorage implements Storage {
     @Override
     public Resume get(String uuid) {
         return sqlHelper.transactionalExecute(conn -> {
-            Resume r;
+            Resume resume;
             try (PreparedStatement prepareStatement = conn
                     .prepareStatement("" +
                             "    SELECT * FROM resume r " +
@@ -40,38 +40,12 @@ public class SqlStorage implements Storage {
                 if (!rsResume.next()) {
                     throw new NotExistStorageException(uuid);
                 }
-                r = new Resume(uuid, rsResume.getString("full_name"));
+                resume = new Resume(uuid, rsResume.getString("full_name"));
             }
-            selectResumeGet(r, uuid, conn, "SELECT type, value FROM contact WHERE resume_uuid =?");
-            selectResumeGet(r, uuid, conn, "SELECT type, value FROM section WHERE resume_uuid =?");
-            return r;
+            selectGet(resume, "SELECT type, value FROM contact WHERE resume_uuid =?", conn, this::addContact);
+            selectGet(resume, "SELECT type, value FROM section WHERE resume_uuid =?", conn, this::addSection);
+            return resume;
         });
-    }
-
-    void selectResumeGet(Resume r, String uuid, Connection conn, String query) throws SQLException {
-        try (PreparedStatement prepareStatement = conn
-                .prepareStatement(query)) {
-            prepareStatement.setString(1, uuid);
-            ResultSet rs = prepareStatement.executeQuery();
-            while (rs.next()) {
-                switch (rs.getString("type")) {
-                    case "OBJECTIVE":
-                    case "PERSONAL":
-                    case "ACHIEVEMENT":
-                    case "QUALIFICATIONS":
-                        addSection(r, rs);
-                        break;
-                    case "TELEPHONE":
-                    case "SKYPE":
-                    case "EMAIL":
-                    case "LINKEDIN":
-                    case "GITHUB":
-                    case "STACKOVERFLOW":
-                        addContact(r, rs);
-                        break;
-                }
-            }
-        }
     }
 
     @Override
@@ -161,9 +135,9 @@ public class SqlStorage implements Storage {
     }
 
     public List<Resume> getAllSorted() {
-        return sqlHelper.transactionalExecute(connection -> {
+        return sqlHelper.transactionalExecute(conn -> {
             Map<String, Resume> resumeMap = new LinkedHashMap<>();
-            try (PreparedStatement preparedStatement = connection.prepareStatement("" +
+            try (PreparedStatement preparedStatement = conn.prepareStatement("" +
                     "SELECT * FROM resume r " +
                     "ORDER BY r.full_name, r.uuid")) {
                 ResultSet rsResume = preparedStatement.executeQuery();
@@ -172,35 +146,33 @@ public class SqlStorage implements Storage {
                     resumeMap.put(uuid, new Resume(uuid, rsResume.getString("full_name")));
                 }
             }
-            selectResumeGetAll(resumeMap, connection, "SELECT resume_uuid, type, value FROM contact");
-            selectResumeGetAll(resumeMap, connection, "SELECT resume_uuid, type, value FROM section");
+            selectGetAll(resumeMap, "SELECT resume_uuid, type, value FROM contact ", conn, this::addContact);
+            selectGetAll(resumeMap, "SELECT resume_uuid, type, value FROM section ", conn, this::addSection);
             return new ArrayList<>(resumeMap.values());
         });
     }
 
-    void selectResumeGetAll(Map<String, Resume> resumeMap, Connection conn, String query) throws SQLException {
-        try (
-                PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            ResultSet rs = preparedStatement.executeQuery();
+    public void selectGet(Resume r, String request, Connection conn, select select) throws SQLException {
+        try (PreparedStatement prepareStatement = conn.prepareStatement(request)) {
+            prepareStatement.setString(1, r.getUuid());
+            ResultSet rs = prepareStatement.executeQuery();
             while (rs.next()) {
-                switch (rs.getString("type")) {
-                    case "OBJECTIVE":
-                    case "PERSONAL":
-                    case "ACHIEVEMENT":
-                    case "QUALIFICATIONS":
-                        addSection(resumeMap.get(rs.getString("resume_uuid")), rs);
-                        break;
-                    case "TELEPHONE":
-                    case "SKYPE":
-                    case "EMAIL":
-                    case "LINKEDIN":
-                    case "GITHUB":
-                    case "STACKOVERFLOW":
-                        addContact(resumeMap.get(rs.getString("resume_uuid")), rs);
-                        break;
-                }
+                select.add(r, rs);
             }
         }
+    }
+
+    public void selectGetAll(Map<String, Resume> resumeMap, String request, Connection conn, select select) throws SQLException {
+        try (PreparedStatement prepareStatement = conn.prepareStatement(request)) {
+            ResultSet rs = prepareStatement.executeQuery();
+            while (rs.next()) {
+                select.add(resumeMap.get(rs.getString("resume_uuid")), rs);
+            }
+        }
+    }
+
+    interface select {
+        void add(Resume r, ResultSet rs) throws SQLException;
     }
 
     @Override
@@ -219,9 +191,9 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void addContact(Resume r, ResultSet rsContact) throws SQLException {
-        String type = rsContact.getString("type");
-        String value = rsContact.getString("value");
+    private void addContact(Resume r, ResultSet rs) throws SQLException {
+        String type = rs.getString("type");
+        String value = rs.getString("value");
         if (type != null) {
             r.addContact(ContactType.valueOf(type), value);
         }
