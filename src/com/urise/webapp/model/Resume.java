@@ -73,6 +73,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.textSection = textSection;
     }
 
+    public String getContact(ContactType type) {
+        return contact.get(type);
+    }
+
+    public AbstractSection getSection(SectionType type) {
+        return textSection.get(type);
+    }
+
     @Override
     public String toString() {
         return "Resume{" +
