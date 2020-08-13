@@ -1,6 +1,7 @@
-<%@ page import="com.urise.webapp.model.AbstractSection" %>
-<%@ page import="com.urise.webapp.model.TextSection" %>
 <%@ page import="com.urise.webapp.model.ListSection" %>
+<%@ page import="com.urise.webapp.model.OrganizationSection" %>
+<%@ page import="com.urise.webapp.model.TextSection" %>
+<%@ page import="com.urise.webapp.util.DateUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -32,29 +33,34 @@
     <h2><a name="type.name">${type.title}</a></h2>
     </p>
     <c:choose>
-        <c:when test="${type=='PERSONAL'}">
+        <c:when test="${type=='PERSONAL' || type=='OBJECTIVE'}">
             <p>
                 <%=((TextSection) section).getText()%>
             </p>
         </c:when>
-        <c:when test="${type == 'OBJECTIVE'}">
-            <tr>
-                <%=((TextSection) section).getText()%>
-            </tr>
-        </c:when>
-        <c:when test="${type=='ACHIEVEMENT'}">
+        <c:when test="${type=='ACHIEVEMENT' || type=='QUALIFICATIONS'}">
             <ul>
                 <c:forEach var="listEntry" items="<%=((ListSection) section).getListText()%>">
                     <li>${listEntry}</li>
                 </c:forEach>
             </ul>
         </c:when>
-        <c:when test="${type=='QUALIFICATIONS'}">
-            <ul>
-                <c:forEach var="listEntry" items="<%=((ListSection) section).getListText()%>">
-                    <li>${listEntry}</li>
+        <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
+            <c:forEach var="org" items="<%=((OrganizationSection) section).getOrgText()%>">
+                <p>
+                <tr>
+                    <h3><a href="${org.link.url}">${org.link.name}</a></h3>
+                </tr>
+                <c:forEach var="stages" items="${org.positions}">
+                    <jsp:useBean id="stages" type="com.urise.webapp.model.Organization.Position"/>
+                    <tr>
+                        <td width="20%" style="vertical-align: top"><%=DateUtil.jspFormatter(stages)%>
+                        </td>
+                        <td><b><br>${stages.position}</b><br>${stages.content}</td>
+                    </p>
+                    </tr>
                 </c:forEach>
-            </ul>
+            </c:forEach>
         </c:when>
     </c:choose>
     </c:forEach>

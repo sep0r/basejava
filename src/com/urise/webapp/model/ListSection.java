@@ -11,12 +11,12 @@ public class ListSection extends AbstractSection {
     public ListSection() {
     }
 
-    public List<String> getListText() {
-        return listText;
-    }
-
     public ListSection(List<String> listText) {
         this.listText = listText;
+    }
+
+    public List<String> getListText() {
+        return listText;
     }
 
     @Override

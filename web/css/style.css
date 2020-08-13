@@ -37,6 +37,12 @@ dd {
     vertical-align: top;
 }
 
+dd.sec {
+    display: inline-block;
+    margin-left: 178px;
+    vertical-align: top;
+}
+
 h2, h3 {
     margin: 15px 0 5px;
 }

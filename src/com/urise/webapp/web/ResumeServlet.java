@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResumeServlet extends HttpServlet {
     private Storage storage; //= Config.getINSTANCE().getStorage();
@@ -20,13 +22,17 @@ public class ResumeServlet extends HttpServlet {
         super.init(config);
         storage = Config.getINSTANCE().getStorage();
     }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume r = storage.get(uuid);
-        r.setFullName(fullName);
+        Resume r;
+        if (uuid.equals("")) {
+            r = new Resume(fullName);
+        } else {
+            r = storage.get(uuid);
+            r.setFullName(fullName);
+        }
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
             if (value != null && value.trim().length() != 0) {
@@ -35,25 +41,34 @@ public class ResumeServlet extends HttpServlet {
                 r.getContact().remove(type);
             }
         }
-        for (SectionType type : SectionType.values()) {
-            String value = request.getParameter(type.name());
-            String[] values = request.getParameterValues(type.name());
-//            if (value == null && values.length < 2) {
-//                r.getTextSection().remove(type);
-//            } else {
-                switch (type) {
-                    case OBJECTIVE:
-                    case PERSONAL:
-                        r.addSection(type, new TextSection(request.getParameter(type.name())));
-                        break;
-                    case ACHIEVEMENT:
-                    case QUALIFICATIONS:
-                        r.addSection(type, new ListSection(Arrays.asList(request.getParameter(type.name()).split("\n"))));
-                        break;
-//                }
+        for (SectionType typeSection : SectionType.values()) {
+            String value = request.getParameter(typeSection.name());
+            if (value != null) {
+                List<String> textList = Arrays.stream(request.getParameterValues(typeSection.name()))
+                        .filter((s) -> !s.equals("") && s.trim().length() != 0)
+                        .collect(Collectors.toList());
+                if (textList.isEmpty()) {
+                    r.getTextSection().remove(typeSection);
+                } else
+                    switch (typeSection) {
+                        case PERSONAL:
+                        case OBJECTIVE:
+                            r.addSection(typeSection, new TextSection(value));
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            r.addSection(typeSection, new ListSection(textList));
+                            break;
+                    }
+            } else {
+                r.getTextSection().remove(typeSection);
             }
         }
-        storage.update(r);
+        if (uuid.equals("")) {
+            storage.save(r);
+        } else {
+            storage.update(r);
+        }
         response.sendRedirect("resume");
     }
 
@@ -74,8 +89,11 @@ public class ResumeServlet extends HttpServlet {
             case "view":
             case "edit":
                 r = storage.get(uuid);
-//                editSections(r);
                 break;
+            case "add":
+                request.setAttribute("resume", new Resume());
+                request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
+                return;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
         }
@@ -85,24 +103,4 @@ public class ResumeServlet extends HttpServlet {
         ).forward(request, response);
 
     }
-//
-//    private void editSections(Resume resume) {
-//        for (SectionType type : SectionType.values()) {
-//            AbstractSection section = resume.getSection(type);
-//            switch (type) {
-//                case OBJECTIVE:
-//                case PERSONAL:
-//                    if (section == null) {
-//                        section = new TextSection();
-//                    }
-//                    break;
-//                case ACHIEVEMENT:
-//                case QUALIFICATIONS:
-//                    if (section == null) {
-//                        section = new ListSection();
-//                    }
-//                    break;
-//            }
-//        }
-//    }
 }
