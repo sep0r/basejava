@@ -38,6 +38,12 @@ public class Organization implements Serializable {
         this.positions = Arrays.asList(positions);
     }
 
+    public <E> Organization(String name, String linkUrl, List<Position> positions) {
+        this.name = name;
+        this.link = new Link("", linkUrl);
+        this.positions = positions;
+    }
+
     public String getName() {
         return name;
     }
@@ -82,18 +88,21 @@ public class Organization implements Serializable {
         private LocalDate finishDate;
         private String content;
 
+        public Position() {
+        }
+
         public Position(String position, LocalDate startDate, LocalDate finishDate, String content) {
             this.position = position;
             this.startDate = startDate;
             this.finishDate = finishDate;
-            if (content == null) {
-                this.content = "";
-            } else {
-                this.content = content;
-            }
+            this.content = content;
         }
 
-        public Position() {
+        public Position(String position, LocalDate startDate, LocalDate finishDate) {
+            this.position = position;
+            this.startDate = startDate;
+            this.finishDate = finishDate;
+            content = "";
         }
 
         public String getPosition() {

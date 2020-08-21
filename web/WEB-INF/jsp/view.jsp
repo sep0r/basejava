@@ -21,7 +21,7 @@
                          type="java.util.Map.Entry<com.urise.webapp.model.ContactType, java.lang.String>"/>
                 <%=contactEntry.getKey().toHtml(contactEntry.getValue())%><br/>
         </c:forEach>
-    <p>
+    </p>
     <p>
         <c:forEach var="sectionEntry" items="${resume.textSection}">
             <jsp:useBean id="sectionEntry"
@@ -29,9 +29,9 @@
             <c:set var="type" value="${sectionEntry.key}"/>
             <c:set var="section" value="${sectionEntry.value}"/>
             <jsp:useBean id="section" type="com.urise.webapp.model.AbstractSection"/>
-    <p>
-    <h2><a name="type.name">${type.title}</a></h2>
     </p>
+    <h2><a name="type.name">${type.title}</a></h2>
+    <p>
     <c:choose>
         <c:when test="${type=='PERSONAL' || type=='OBJECTIVE'}">
             <p>
@@ -47,24 +47,33 @@
         </c:when>
         <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
             <c:forEach var="org" items="<%=((OrganizationSection) section).getOrgText()%>">
-                <p>
+                <table cellpadding="1" cellspacing="4">
                 <tr>
-                    <h3><a href="${org.link.url}">${org.link.name}</a></h3>
+                    <td colspan="2">
+                        <c:choose>
+                            <c:when test="${empty org.link.url}">
+                                <h3>${org.name}</h3>
+                            </c:when>
+                            <c:otherwise>
+                                <h3><a href="${org.link.url}">${org.name}</a></h3>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
-                <c:forEach var="stages" items="${org.positions}">
-                    <jsp:useBean id="stages" type="com.urise.webapp.model.Organization.Position"/>
+                <c:forEach var="positions" items="${org.positions}">
+                    <jsp:useBean id="positions" type="com.urise.webapp.model.Organization.Position"/>
                     <tr>
-                        <td width="20%" style="vertical-align: top"><%=DateUtil.jspFormatter(stages)%>
+                        <td width="120" valign="top"><%=DateUtil.jspFormatter(positions)%>
                         </td>
-                        <td><b><br>${stages.position}</b><br>${stages.content}</td>
-                    </p>
+                        <td valign="top"><b>${positions.position}</b><br>${positions.content}</td>
                     </tr>
                 </c:forEach>
+                </table>
             </c:forEach>
         </c:when>
     </c:choose>
     </c:forEach>
-    <p>
+    </p>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
