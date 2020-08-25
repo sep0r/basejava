@@ -31,7 +31,7 @@ public class ResumeTestData {
         textSection.put(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList("textQualif","textQualif2","textQualif3")));
 
         textSection.put(SectionType.EXPERIENCE, new OrganizationSection(Arrays.asList(
-                new Organization("RESUME_1 header", new Link("asas",null),
+                new Organization("RESUME_1 header", "RESUME_1 link", null,
                 new Organization.Position("RESUME_1 title.", LocalDate.of(2002,05,12),
                         LocalDate.of(2002,05,12), "RESUME_1 experience")))));
         textSection.put(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(

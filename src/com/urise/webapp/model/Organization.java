@@ -20,28 +20,23 @@ public class Organization implements Serializable {
     private Link link;
     private List<Position> positions = new ArrayList<>();
 
-    public Organization(String name, String nameLink, String url, List<Position> positions) {
+    public Organization(String name, String nameLink, String url) {
         this.name = name;
-        this.link = new Link(nameLink, url);
+        if (nameLink == null) {
+            this.link = new Link("", url);
+        } else {
+            this.link = new Link(nameLink, url);
+        }
+    }
+
+    public Organization(String name, String nameLink, String url, List<Position> positions) {
+        this(name, nameLink, url);
         this.positions = positions;
     }
 
     public Organization(String name, String nameLink, String url, Position... positions) {
-        this.name = name;
-        this.link = new Link(nameLink, url);
+        this(name, nameLink, url);
         this.positions = Arrays.asList(positions);
-    }
-
-    public Organization(String name, Link link, Position positions) {
-        this.name = name;
-        this.link = link;
-        this.positions = Arrays.asList(positions);
-    }
-
-    public <E> Organization(String name, String linkUrl, List<Position> positions) {
-        this.name = name;
-        this.link = new Link("", linkUrl);
-        this.positions = positions;
     }
 
     public String getName() {
@@ -95,14 +90,11 @@ public class Organization implements Serializable {
             this.position = position;
             this.startDate = startDate;
             this.finishDate = finishDate;
-            this.content = content;
-        }
-
-        public Position(String position, LocalDate startDate, LocalDate finishDate) {
-            this.position = position;
-            this.startDate = startDate;
-            this.finishDate = finishDate;
-            content = "";
+            if (content == null) {
+                this.content = "";
+            } else {
+                this.content = content;
+            }
         }
 
         public String getPosition() {

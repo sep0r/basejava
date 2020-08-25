@@ -86,7 +86,7 @@ public class ResumeServlet extends HttpServlet {
                                         LocalDate finishDate = LocalDate.parse(finish.equals("") ? "0001-01-01" : finish);
 
                                         if (typeSection.equals(SectionType.EDUCATION)) {
-                                            listPosition.add(new Organization.Position(position, startDate, finishDate));
+                                            listPosition.add(new Organization.Position(position, startDate, finishDate,null));
                                         } else {
                                             String content = parameterMap.get("content")[countPosition];
                                             listPosition.add(new Organization.Position(position, startDate, finishDate, content));
@@ -106,7 +106,7 @@ public class ResumeServlet extends HttpServlet {
                                             listOrganization.add(organization);
                                         }
                                         lastName = name;
-                                        organization = new Organization(name, parameterMap.get("link")[countLink],new ArrayList<>(listPosition));
+                                        organization = new Organization(name,null, parameterMap.get("link")[countLink],new ArrayList<>(listPosition));
                                         countLink++;
                                         break;
                                 }
